@@ -14,15 +14,16 @@ router.get('/post/all',(req,res)=>{
 })
 
 router.post('/post/create',requireLogin,(req,res)=>{
-  const{ title,body} = req.body
+  const{ title,body,image } = req.body
 
-  if(!title || !body){
+  if(!title || !body || image){
     return res.status(422).json({error:"Please provide tile or body"})
   }
   req.user.password = undefined
   const post = new Post({
     title,
     body,
+    image,
     postedBy: req.user
   })
   post.save()
